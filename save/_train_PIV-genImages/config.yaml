@@ -1,0 +1,44 @@
+train_dataset:
+  dataset:
+    name: image-folder
+    args:
+      root_path: ./PIV-genImages/FlowData_train_small.list
+  batch_size: 6
+val_dataset:
+  dataset:
+    name: image-folder
+    args:
+      root_path: ./PIV-genImages/FlowData_test.list
+  batch_size: 1
+eval_bsize: 500
+data_norm:
+  inp:
+    sub:
+    - 0.5
+    div:
+    - 0.5
+  gt:
+    sub:
+    - 0.5
+    div:
+    - 0.5
+model:
+  name: piv_gt
+  args:
+    encoder_spec:
+      name: edsr-baseline
+      args:
+        no_upsampling: true
+    width: 128
+    blocks: 16
+    iters: 5
+optimizer:
+  name: adam
+  args:
+    lr: 0.0001
+epoch_max: 300
+warmup_step_lr:
+  multiplier: 5
+  total_epoch: 20
+epoch_val: 1
+epoch_save: 10
